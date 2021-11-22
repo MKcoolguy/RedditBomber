@@ -1,20 +1,21 @@
 from psaw import PushshiftAPI
 import datetime
 import praw
+import threading
+
+
 
 api = PushshiftAPI()
-
-
 start_time = int(datetime.datetime(2019, 1, 1).timestamp())
 
 submissions = api.search_submissions(after=start_time,
-                                    subreddit='askrp',
-                                    filter=['url','author', 'title', 'subreddit'], limit = 220)
+                                    subreddit='asktrp',
+                                    filter=['url','author', 'title', 'subreddit'], limit = 100)
 
 
 comments = api.search_comments(after=start_time,
-                                    subreddit='askrp',
-                                    filter=['url','author', 'title', 'subreddit'], limit = 220)
+                                    subreddit='asktrp',
+                                    filter=['url','author', 'title', 'subreddit'], limit = 100)
 
 #All found usernames are written to new text file Users.txt
 users = open("Users.txt","w")
@@ -38,7 +39,7 @@ for comment in comments:
     if comment.author not in blockedUsersSet:
         usersSet.add(comment.author)
 
-#Writes to text file
+#Writes users to text file
 for user in usersSet:
     users.writelines(user + "\n")
 '''
@@ -58,3 +59,5 @@ for user in usersSet:
          "**##Hello!** we have decided to start a new community at **#r/askrp** to replace r/asktrp. **Please come join us at #r/askrp** so we can have an **##active community!**")
 
 '''
+
+print("Application executed successfully")
