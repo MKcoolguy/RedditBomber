@@ -13,7 +13,7 @@ submissions = api.search_submissions(after=start_time,
 
 comments = api.search_comments(after=start_time,
                                     subreddit='asktrp',
-                                    filter=['url','author', 'title', 'subreddit'], limit = 10)
+                                    filter=['url','author', 'title', 'subreddit'], limit = 20)
 
 '''
 for submission in submissions:
@@ -26,5 +26,17 @@ for submission in submissions:
     '''
 
 
+#All found usernames are written to new text file Users.txt
+users = open("Users.txt","w")
+
+#A set to prevent duplicate duplicates from writing to the file
+usersSet = {""}
+
+#Searches all comment authors and adds to set
 for comment in comments:
-    print(comment)
+    if comment.author != "[deleted]":
+        usersSet.add(comment.author)
+
+#Writes to text file
+for user in usersSet:
+    users.writelines(user + "\n")
