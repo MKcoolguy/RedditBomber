@@ -1,11 +1,3 @@
 [deleted]
-redpillschool
-trpbot
-RPNorvell
-VigilantRedRooster
-EpicLevelCheater
-SlyGradient
-CrazyHorseInvincible
-Halitenina
-TheRedPike
-hatblacksack
+AutoModerator
+AutoMod
