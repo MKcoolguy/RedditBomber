@@ -12,7 +12,7 @@ start_time = int(datetime.datetime(2021, 6, 25).timestamp())
 
 #Variable to store all submissions and posts
 submissions = api.search_submissions(after=start_time,
-                                    subreddit='newTRP',
+                                    subreddit='NameHere', #Insert subreddit name
                                     filter=['url','author', 'title', 'subreddit'], limit = 20)
 
 #All found usernames are written to new text file Users.txt
@@ -37,11 +37,11 @@ for submission in submissions:
 
 #Reddit API credentials
 reddit = praw.Reddit(
-    client_id="", #Insert your Id here
-    client_secret="", #Insert your secret id
-    password="", #Insert your password
-    user_agent="agent",
-    username="", #Insert your username
+    client_id="", #Insert client ID
+    client_secret="", #Insert secret ID
+    password="", #Insert account password
+    user_agent="agent", 
+    username="", #Insert username
 )
 
 #Searches each post for comment authors and adds to set
@@ -64,5 +64,13 @@ for user in usersSet:
 #Message users
 for user in usersSet:
     if (user != ""):
-        reddit.redditor(user).message("Message Title Here", #Insert Message title
-         "Message body") #Insert Message Body
+        try:
+            reddit.redditor(user).message("Message Title Here", "Message body") #Insert Message 
+            print("Message sent to: " + user)
+        except praw.exceptions.RedditAPIException:
+            print("Exceeded DM Limit. Resting for 60 seconds before trying again")
+            time.sleep(60)
+
+
+
+print("Script Executed Sucessfully")
